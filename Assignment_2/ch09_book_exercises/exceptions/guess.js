@@ -26,17 +26,27 @@ const guessButtonClick = () => {
     document.querySelector("#error_message").textContent = "";
     document.querySelector("#message").textContent = "";
 
-    const guess = getGuess();
+    let guess = null;
 
-    let message = "";
-    if (guess < randomNum) {
-        message = "Too small. Try again.";
-    } else if (guess > randomNum) {
-        message = "Too big. Try again.";
-    } else if (guess === randomNum) {
-        message = "You guessed it!";
+    try {
+        guess = getGuess();
     }
-    document.querySelector("#message").textContent = message;
+    catch( error ) {
+        document.querySelector("#error_message").textContent = error.message;
+    }
+
+    if (guess) {
+        let message = "";
+        if (guess < randomNum) {
+            message = "Too small. Try again.";
+        } else if (guess > randomNum) {
+            message = "Too big. Try again.";
+        } else if (guess === randomNum) {
+            message = "You guessed it!";
+        }
+        document.querySelector("#message").textContent = message;
+    }
+        
 };
 
 const playAgainButtonClick = () => {
