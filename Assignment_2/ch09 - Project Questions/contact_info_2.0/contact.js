@@ -4,7 +4,10 @@ const getElement = selector => document.querySelector(selector);
 const clearMessages = form => {
     for (let element of form.elements) {
         const span = element.nextElementSibling;
-        if (span) span.textContent = "*";
+        // if statement to check span and ignore reset button
+        if (span && span.id != "reset") {
+            span.textContent = "*";
+        }
     }
 };
 
@@ -26,33 +29,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
         clearMessages(form);
         
+        // check if either email or phone is filled
         const email = getElement("#email").value;
         const phone = getElement("#phone").value;
-
-        console.log(email);
-        console.log(phone);
 
         if (email == "" && phone == "") {
             getElement("#email").nextElementSibling.textContent = "Please enter a email or phone"
             evt.preventDefault();
         }
 
-        const dob =  getElement("#dob").value;
-        const dateParts = getElement("#dob").value.split("/");
-
-        let dobDate = new Date(dateParts[2], dateParts[0]);
-
-        console.log(dobDate);
-
+        //check if dob is in the past
+        const dob = getElement("#dob");
+        const dobDate = new Date(dob.value + "T00:00:00")
         const today = new Date();
 
-        if (today > dobDate) {
-            getElement("#dob").nextElementSibling.textContent = "Date of birth needs to be in the past";
+        console.log(dob.value, dobDate)
+
+        if (today < dobDate) {
+            dob.nextElementSibling.textContent = "DOB must be in the past";
+            evt.preventDefault();
         }
         else {
-             getElement("#dob").nextElementSibling.textContent = "";
+            dob.nextElementSibling.textContent = "*";
         }
 
+        // check form validity
         if (!form.checkValidity()) {
             evt.preventDefault();
         }

@@ -26,25 +26,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     form.addEventListener("submit", evt => {
 
-        evt.preventDefault();
-
         // handle submit event
         clearMessages(form);
 
         const expiry = getElement("#expdate");
         const dateParts = expiry.value.split("/");
-
-        let expiryDate = new Date("20" + dateParts[1], dateParts[0]);
-
-        console.log(expiryDate);
-
+        const expiryDate = new Date("20" + dateParts[1], dateParts[0]);
         const today = new Date();
 
         if (today > expiryDate) {
-            expiry.setCustomValidity("Expiry date needs to be in the future");
+            expiry.nextElementSibling.textContent = "Expiry date needs to be in the future";
+            evt.preventDefault();
         }
         else {
-            expiry.setCustomValidity("");
+            expiry.nextElementSibling.textContent = "*";
         }
 
         if (!form.checkValidity()) {
