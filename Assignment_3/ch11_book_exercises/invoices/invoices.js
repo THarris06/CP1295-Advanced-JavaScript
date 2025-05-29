@@ -33,6 +33,15 @@ function displayInvoices(invoices) {
     }
 
     // add one row for each invoice
+    // invoices.forEach( invoice => {
+    //     // invoice[1] = invoice[1].toFixed(2)
+    //     const row = document.createElement("tr");
+    //     invoice.forEach( item => {
+    //         const col = createCol(item);
+    //         row.appendChild(col);
+    //     })
+    //     table.appendChild(row);
+    // })
 }
  
 function displayInvoices(invoices) {
@@ -45,6 +54,16 @@ function displayInvoices(invoices) {
     }
 
     // add one row for each invoice
+    invoices.forEach( invoice => {
+        invoice[1] = invoice[1].toFixed(2);
+        invoice[2] = invoice[2].toDateString();
+        const row = document.createElement("tr");
+        invoice.forEach( item => {
+            const col = createCol(item);
+            row.appendChild(col);
+        })
+        table.appendChild(row);
+    })
 }
  
 function filterInvoices() {
@@ -57,6 +76,7 @@ function filterInvoices() {
         const endDate   = new Date(getElement("#end_date").value);        
 
         // add code that finishes this filter
+        return invoiceDate += startDate && invoiceDate <= endDate;
     });
 
     // filter by paid status
