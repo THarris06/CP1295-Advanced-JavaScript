@@ -16,32 +16,20 @@ function getInvoices() {
     return invoices;
 }
 
+function getRadioStatus() {
+    const radios = document.getElementsByName("paid_status");
+    for (let i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            return radios[i].value;
+        }
+    }
+}
+
 function createCol(text) {
     const col = document.createElement("td");
     const textNode = document.createTextNode(text);
     col.appendChild(textNode);
     return col;
-}
-
-function displayInvoices(invoices) {
-    const table = getElement("#invoice_table");
-
-    // clear any existing invoices (but not header row)
-    const rows = document.querySelectorAll("#invoice_table tr");
-    for (let i = 1; i < rows.length; i++) {
-        table.removeChild(rows[i]);
-    }
-
-    // add one row for each invoice
-    // invoices.forEach( invoice => {
-    //     // invoice[1] = invoice[1].toFixed(2)
-    //     const row = document.createElement("tr");
-    //     invoice.forEach( item => {
-    //         const col = createCol(item);
-    //         row.appendChild(col);
-    //     })
-    //     table.appendChild(row);
-    // })
 }
  
 function displayInvoices(invoices) {
@@ -68,19 +56,29 @@ function displayInvoices(invoices) {
  
 function filterInvoices() {
     const invoices = getInvoices();
-
+    
     // filter by date
+    const startDate = new Date(getElement("#start_date").value);
+    const endDate = new Date(getElement("#end_date").value);   
     let filtered = invoices.filter(invoice => {
-        const invoiceDate = invoice[2];
-        const startDate = new Date(getElement("#start_date").value);
-        const endDate   = new Date(getElement("#end_date").value);        
+        let invoiceDate = invoice[2];     
 
         // add code that finishes this filter
-        return invoiceDate += startDate && invoiceDate <= endDate;
+        return invoiceDate >= startDate && invoiceDate <= endDate;
     });
 
     // filter by paid status
-
+    const paidFilter = getRadioStatus();
+    if (paidFilter === 'paid') {
+        filtered = filtered.filter(invoice => {
+            return invoice[3] === true
+        });
+    } else if (paidFilter === 'unpaid') {
+        filtered = filtered.filter(invoice => {
+            return invoice[3] === false
+        });
+    }
+    
     // display the filtered data
     displayInvoices(filtered);
 }

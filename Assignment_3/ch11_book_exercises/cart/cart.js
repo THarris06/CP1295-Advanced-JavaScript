@@ -55,13 +55,10 @@ function addSummaryRow(lineItems) {
 
 document.addEventListener("DOMContentLoaded", () => {
     // get line items
-    const lineItems = getLineItems();
+    const lineItems = getLineItems().sort();
 
     // display line items
-    for (let lineItem of lineItems) {
-        addRow(lineItem);
-    }
-    // lineItems.forEach(addRow())
+    lineItems.forEach(lineItem => addRow(lineItem));
 
     // add summary row
     addSummaryRow(lineItems);
