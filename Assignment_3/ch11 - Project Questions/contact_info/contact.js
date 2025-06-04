@@ -20,7 +20,8 @@ const saveContact = () => {
     sessionStorage.contact = [getElement("#name").value, getElement("#email").value, getElement("#phone").value, getElement("#zip").value, new Date(getElement("#dob").value + "T00:00:00")]
 };
 const displayContact = () => {
-    getElement("#name").value = sessionStorage.name ?? "";
+    console.log(sessionStorage.contact)
+    getElement("#name").value = sessionStorage.contact[0] ?? "";
     getElement("#email").value = sessionStorage.email ?? "";
     getElement("#phone").value = sessionStorage.phone ?? "";
     getElement("#zip").value = sessionStorage.zip ?? "";
