@@ -4,18 +4,20 @@ const getElement = selector => document.querySelector(selector);
 const padNum = num => num.toString().padStart(2, "0");
 
 const clearContact = () => {
-    sessionStorage.removeItem("name");
-    sessionStorage.removeItem("email");
-    sessionStorage.removeItem("phone");
-    sessionStorage.removeItem("zip");
-    sessionStorage.removeItem("dob");
+    // sessionStorage.removeItem("name");
+    // sessionStorage.removeItem("email");
+    // sessionStorage.removeItem("phone");
+    // sessionStorage.removeItem("zip");
+    // sessionStorage.removeItem("dob");
+    sessionStorage.removeItem("contact");
 };
 const saveContact = () => {
-    sessionStorage.name = getElement("#name").value;
-    sessionStorage.email = getElement("#email").value;
-    sessionStorage.phone = getElement("#phone").value;
-    sessionStorage.zip = getElement("#zip").value;
-    sessionStorage.dob = new Date(getElement("#dob").value + "T00:00:00");
+    // sessionStorage.name = getElement("#name").value;
+    // sessionStorage.email = getElement("#email").value;
+    // sessionStorage.phone = getElement("#phone").value;
+    // sessionStorage.zip = getElement("#zip").value;
+    // sessionStorage.dob = new Date(getElement("#dob").value + "T00:00:00");
+    sessionStorage.contact = [getElement("#name").value, getElement("#email").value, getElement("#phone").value, getElement("#zip").value, new Date(getElement("#dob").value + "T00:00:00")]
 };
 const displayContact = () => {
     getElement("#name").value = sessionStorage.name ?? "";
