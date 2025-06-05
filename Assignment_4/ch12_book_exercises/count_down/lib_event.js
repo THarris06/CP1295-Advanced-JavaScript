@@ -16,4 +16,25 @@ class Event {
     get isValidDate() {
         return this.date.toString() != 'Invalid Date';
     }
+
+    get days() {
+        const today = new Date();
+        const msFromToday = this.date.getTime() - today.getTime();
+        const msForOneDay = 24 * 60 * 60 * 1000; // hrs * mins * secs * milliseconds  
+        return Math.ceil( msFromToday / msForOneDay ); 
+    }
+
+    get message() {
+        let msg = "";
+        const date = this.date.toDateString();
+        if (this.days == 0) {
+            msg = `Hooray! Today is ${this.name}! (${date})`;
+        } else if (this.days > 0) {
+            msg = `${this.days} day(s) until ${this.name}! (${date})`;
+        } else if (this.days < 0) {
+            msg = `${this.name} happened ${Math.abs(this.days)} 
+                   day(s) ago. (${date})`;
+        }
+        return msg;
+    }
 }
