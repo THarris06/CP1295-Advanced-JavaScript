@@ -1,6 +1,8 @@
 class Order {
-    constructor() {
-
+    constructor(burger, drink, fries) {
+        this.burger = burger;
+        this.drink = drink;
+        this.fries = fries;
     }
 }
 
@@ -30,7 +32,3 @@ class Fries {
         this.size = size;
     }
 }
-
-const burger = new Burger();
-
-console.log(burger);
