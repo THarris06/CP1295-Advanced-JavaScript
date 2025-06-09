@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const order = new Order(burger, drink, fries);
 
         // Display order in the HTML
-        let html = `<h3>Your Order:</h3>`;
+        let html = ``;
 
         if (order.burger) {
             html += `<p><strong>Burger:</strong> ${order.burger.size} ${order.burger.type}`;
@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
             html += `<p><strong>Fries:</strong> ${order.fries.size} ${order.fries.type}</p>`;
         }
 
-        getElement("#order_details").innerHTML = html;
+        getElement("#order_details").innerHTML += html;
 
     }); 
 
