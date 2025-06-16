@@ -3,9 +3,12 @@
 const getElement = selector => document.querySelector(selector);
 
 document.addEventListener("DOMContentLoaded", () => {
-    getElement("#new_game").addEventListener("click", () => {
-        // start new game
+    // global roll count to check for come out win/lose
+    let ROLL_COUNT = 0;
 
+    getElement("#new_game").addEventListener("click", () => {
+        // reset count
+        ROLL_COUNT = 0;
         // update page
         getElement("#roll").disabled = false;
         getElement("#new_game").disabled = true;
@@ -15,9 +18,44 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     getElement("#roll").addEventListener("click", () => {
-        // roll, check if users wins or loses
-        
-        // update page
+        // increment ROLL_COUNT every click
+        ROLL_COUNT += 1;
+
+        // roll dice
+        let roll = Math.trunc((Math.random() * 6) + 1);
+        roll += Math.trunc((Math.random() * 6) + 1);
+        getElement("#current_roll").textContent = roll;
+
+        // if it's the first roll, check for come out win/lose, else set the point
+        if (ROLL_COUNT == 1) {
+            if (roll == 7 || roll == 11) {
+                getElement("#message").textContent = `You rolled ${roll} on the come out roll - you win!`;
+                getElement("#roll").disabled = true;
+                getElement("#new_game").disabled = false;
+            }
+            else if (roll == 2 || roll == 3 || roll == 12) {
+                getElement("#message").textContent = `You rolled ${roll} on the come out roll - you lose.`;
+                getElement("#roll").disabled = true;
+                getElement("#new_game").disabled = false;
+            }
+            else {
+                getElement("#point").textContent = roll;
+            }
+        }
+        // else handles the rest of the game
+        else {
+            let point = getElement("#point").textContent;
+            if (roll == point) {
+                getElement("#message").textContent = `You rolled a ${roll} - you win!`;
+                getElement("#roll").disabled = true;
+                getElement("#new_game").disabled = false;
+            }
+            else if (roll == 7) {
+                getElement("#message").textContent = `You rolled a ${roll} - you lose.`;
+                getElement("#roll").disabled = true;
+                getElement("#new_game").disabled = false;
+            }
+        }
         
     });
 }); 
