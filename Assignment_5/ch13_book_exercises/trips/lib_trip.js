@@ -1,6 +1,6 @@
 "use strict";
 
-class Trip {
+export default class Trip {
     constructor(destination, miles, gallons) {
         this.destination = destination;
         this.miles = parseFloat(miles);

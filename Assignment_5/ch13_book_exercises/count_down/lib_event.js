@@ -1,6 +1,6 @@
 "use strict";
 
-class Event {
+export default class Event {
     #dateString = "";
     constructor(name, dateString) {
         this.name = name;
