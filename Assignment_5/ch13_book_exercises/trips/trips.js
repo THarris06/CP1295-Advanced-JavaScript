@@ -2,7 +2,7 @@
 
 import Trip from './lib_trip.js';
 import trips from './lib_trips.js';
-import exports from './lib_validation.js';
+import v from './lib_validation.js';
 
 const getElement = selector => document.querySelector(selector);
 
@@ -18,15 +18,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const gallons = getElement("#gallons").value;
         const trip = new Trip(destination, miles, gallons);
 
-        if (exports.anyEmpty(destination, miles, gallons)) {
+        if (v.anyEmpty(destination, miles, gallons)) {
             msgElement.textContent = "All fields are required.";
             getElement("#destination").focus();
         } 
-        else if (exports.isNegativeNumber(miles) || exports.isEmpty(miles)) {
+        else if (v.isNegativeNumber(miles) || v.isEmpty(miles)) {
             msgElement.textContent = "Miles must be a valid number greater than zero.";
             getElement("#miles").select();
         } 
-        else if (exports.isNegativeNumber(gallons) || exports.isEmpty(gallons)) {
+        else if (v.isNegativeNumber(gallons) || v.isEmpty(gallons)) {
             msgElement.textContent = "Gallons must be a valid number greater than zero.";
             getElement("#gallons").select();
         } 

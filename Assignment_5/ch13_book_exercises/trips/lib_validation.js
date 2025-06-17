@@ -13,10 +13,4 @@ function isNegativeNumber(value) {
     return isNaN(num) || num <= 0;
 }
 
-const exports = {
-    isEmpty,
-    anyEmpty,
-    isNegativeNumber
-}
-
-export default exports;
+export default {isEmpty, anyEmpty, isNegativeNumber};
