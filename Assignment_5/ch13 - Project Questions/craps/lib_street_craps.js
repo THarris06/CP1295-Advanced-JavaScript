@@ -1,60 +1,38 @@
-// import statement(s)
+"use strict";
 
-// private
+export function roll(diceObj) {
+    let total = 0;
+    for (let i = 0; i < diceObj.dice.length; i++) {
+        total += Math.trunc(Math.random() * 6) + 1;
+    }
+    return total;
+}
 
-
-// public
-
-
-export default class StreetCraps {
-  constructor() {
-    this.rollCount = 0;
-    this.point = 0;
-    this.isGameOver = false;
-  }
-
-  reset() {
-    this.rollCount = 0;
-    this.point = 0;
-    this.isGameOver = false;
-  }
-
-  /**
-   * Process a roll and return an object indicating game status.
-   * @param {number} roll - The dice roll total.
-   * @returns {object} - { message: string, gameOver: boolean }
-   */
-  processRoll(roll) {
-    this.rollCount++;
-
-    if (this.rollCount === 1) {
-      // Come out roll
-      if (roll === 7 || roll === 11) {
-        this.isGameOver = true;
-        return { message: `You rolled ${roll} on the come out roll - you win!`, gameOver: true };
-      }
-      else if ([2, 3, 12].includes(roll)) {
-        this.isGameOver = true;
-        return { message: `You rolled ${roll} on the come out roll - you lose.`, gameOver: true };
-      }
-      else {
-        this.point = roll;
-        return { message: `Point is set to ${roll}`, gameOver: false };
-      }
+export function processGame(roll, point, rollCount) {
+    if (rollCount == 1) {
+        // Come out roll
+        if (roll == 7 || roll == 11) {
+            return `You rolled ${roll} on the come out roll - you win!`;
+        }
+        else if (roll == 2 || roll == 3 || roll == 12) {
+            return `You rolled ${roll} on the come out roll - you lose.`;
+        }
+        else {
+            return '';
+        }
     }
     else {
-      // Subsequent rolls
-      if (roll === this.point) {
-        this.isGameOver = true;
-        return { message: `You rolled a ${roll} - you win!`, gameOver: true };
-      }
-      else if (roll === 7) {
-        this.isGameOver = true;
-        return { message: `You rolled a ${roll} - you lose.`, gameOver: true };
-      }
-      else {
-        return { message: `You rolled a ${roll}. Keep rolling...`, gameOver: false };
-      }
+        // Subsequent rolls
+        if (roll == point) {
+            return `You rolled a ${roll} - you win!`;
+        }
+        else if (roll == 7) {
+            return `You rolled a ${roll} - you lose.`;
+        }
+        else {
+            return '';
+        }
     }
-  }
 }
+
+export default { roll, processGame };
