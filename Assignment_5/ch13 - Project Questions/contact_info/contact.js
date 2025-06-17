@@ -1,4 +1,7 @@
 "use strict";
+
+import Contact from "./lib_contact.js";
+
 const getElement = selector => document.querySelector(selector);
 
 const padNum = num => num.toString().padStart(2, "0");
@@ -6,17 +9,17 @@ const padNum = num => num.toString().padStart(2, "0");
 const clearContact = () => {
     sessionStorage.removeItem("contact");
 };
-const saveContact = (...contact) => {
+const saveContact = (contact) => {
     sessionStorage.contact = JSON.stringify(contact);
 };
 const displayContact = () => {
     const contact = JSON.parse(sessionStorage.contact ?? null);
-    if (Array.isArray(contact)) {
-        getElement("#name").value = contact[0];
-        getElement("#email").value = contact[1];
-        getElement("#phone").value = contact[2];
-        getElement("#zip").value = contact[3];
-        const dt = new Date(contact[4]);
+    if (contact) {
+        getElement("#name").value = contact.name;
+        getElement("#email").value = contact.email;
+        getElement("#phone").value = contact.phone;
+        getElement("#zip").value = contact.zip;
+        const dt = new Date(contact.dob);
         if(!(dt.toString() == "Invalid Date")) {
             const str = `${dt.getFullYear()}-${padNum(dt.getMonth() + 1)}-${padNum(dt.getDate())}`;
             getElement("#dob").value = str;
@@ -25,13 +28,11 @@ const displayContact = () => {
 };
 const displayConfirmPage = () => {
     const contact = JSON.parse(sessionStorage.contact ?? null);
-    if (Array.isArray(contact)) {
-        getElement("#lbl_name").textContent = contact[0];
-        getElement("#lbl_email").textContent = contact[1];
-        getElement("#lbl_phone").textContent = contact[2];
-        getElement("#lbl_zip").textContent = contact[3];
-        getElement("#lbl_dob").textContent = new Date(contact[4]).toDateString() ?? "";
-    }
+    getElement("#lbl_name").textContent = contact.name ?? "";
+    getElement("#lbl_email").textContent = contact.email ?? "";
+    getElement("#lbl_phone").textContent = contact.phone ?? "";
+    getElement("#lbl_zip").textContent = contact.zip ?? "";
+    getElement("#lbl_dob").textContent = new Date(contact.dob).toDateString() ?? "";
 };
 
 const clearMessages = () => {
@@ -90,8 +91,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 evt.preventDefault();
             } else {
                 // save contact info to web storage
-                saveContact(getElement("#name").value, email.value, 
-                    phone.value, getElement("#zip").value, dobValue);
+                const contact = new Contact(getElement("#name").value, email.value, phone.value, getElement("#zip").value, dobValue)
+                saveContact(contact);
             }
         });
 

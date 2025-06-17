@@ -1,5 +1,7 @@
 "use strict";
 
-class dob extends Date {
-
+export default class Dob extends Date {
+    constructor(date) {
+        super(date);
+    }
 }
