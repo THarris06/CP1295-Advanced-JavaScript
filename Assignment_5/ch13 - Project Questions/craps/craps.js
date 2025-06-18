@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         else if (point == 0) {
             getElement("#point").textContent = roll;
-            point = getElement("#point").textContent;
+            point = roll;
         }
     });
 });
