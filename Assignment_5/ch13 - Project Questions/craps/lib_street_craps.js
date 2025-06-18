@@ -1,11 +1,11 @@
 "use strict";
+// import statement(s)
 
-export function roll(diceObj) {
-    let total = 0;
-    for (let i = 0; i < diceObj.dice.length; i++) {
-        total += Math.trunc(Math.random() * 6) + 1;
-    }
-    return total;
+// private
+
+// public
+export function roll(dice) {
+    return dice.roll();
 }
 
 export function processGame(roll, point, rollCount) {
