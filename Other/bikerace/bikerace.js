@@ -17,28 +17,40 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
     form.addEventListener("submit", evt => {
-        evt.preventDefault();
         //clear error messages
         for (let element of form.elements) {
             const span = element.nextElementSibling;
             if (span) span.textContent = "";
         }
 
-        const first = getElement("#first").value;
-        const last = getElement("#last").value;
-        const birth = new Date(getElement("#birth").value);
-        const guardian = getElement("#guardian").value;
-        console.log(first, last, birth, guardian);
+        const first = getElement("#first");
+        const last = getElement("#last");
+        const birth = getElement("#birth");
+        const guardian = getElement("#guardian");
         
+        const birthDate = new Date(birth.value);
+
         //perform custom validation so birth date is at least 16 years ago
         if (birth) {
             const limit = new Date();
             limit.setFullYear(limit.getFullYear() - 16);
             
-            if ((birth.getFullYear() > limit.getFullYear())) {
-                const msg = "must be older than 16 OR enter a guardian";
-                
-                getElement("#birth").setCustomValidity(msg);
+            if (birthDate > limit) {
+                guardian.required = true;
+
+                if (!guardian.value) {
+                    guardian.setCustomValidity("Guardian is required if under 16.");
+                }
+                else {
+                    guardian.setCustomValidity("");
+                }
+
+                birth.setCustomValidity("");
+            }
+            else {
+                guardian.required = false;
+                guardian.setCustomValidity("");
+                birth.setCustomValidity("");
             }
             
         }
