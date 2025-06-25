@@ -10,11 +10,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // attach invalid event handlers
     for (let element of form.elements) {
-            element.addEventListener("invalid", evt => {
-                const span = evt.currentTarget.nextElementSibling;
-                if (span) span.textContent = evt.currentTarget.validationMessage;
-            });
-        }
+        element.addEventListener("invalid", evt => {
+            const span = evt.currentTarget.nextElementSibling;
+            if (span) span.textContent = evt.currentTarget.validationMessage;
+        });
+    }
 
     form.addEventListener("submit", evt => {
         //clear error messages
@@ -23,8 +23,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (span) span.textContent = "";
         }
 
-        const first = getElement("#first");
-        const last = getElement("#last");
+        // const first = getElement("#first");
+        // const last = getElement("#last");
         const birth = getElement("#birth");
         const guardian = getElement("#guardian");
         
